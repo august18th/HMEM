@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMEM.AlertService", "HMEM.AlertService\HMEM.AlertService.csproj", "{354CB3C6-0CEE-4323-9A4C-0DD7953FA747}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMEM.Data", "HMEM.Data\HMEM.Data.csproj", "{A4CCD299-E5CC-4032-9028-4C1EFEA7C3B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMEM.API", "HMEM.API\HMEM.API.csproj", "{BF0DABE5-FCBE-4305-8F19-FE5A29911527}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMEM.Common", "HMEM.Common\HMEM.Common.csproj", "{6B051D2D-1C1E-4B6E-9513-5D0698F560EE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{354CB3C6-0CEE-4323-9A4C-0DD7953FA747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{354CB3C6-0CEE-4323-9A4C-0DD7953FA747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{354CB3C6-0CEE-4323-9A4C-0DD7953FA747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{354CB3C6-0CEE-4323-9A4C-0DD7953FA747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4CCD299-E5CC-4032-9028-4C1EFEA7C3B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4CCD299-E5CC-4032-9028-4C1EFEA7C3B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4CCD299-E5CC-4032-9028-4C1EFEA7C3B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4CCD299-E5CC-4032-9028-4C1EFEA7C3B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF0DABE5-FCBE-4305-8F19-FE5A29911527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF0DABE5-FCBE-4305-8F19-FE5A29911527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF0DABE5-FCBE-4305-8F19-FE5A29911527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF0DABE5-FCBE-4305-8F19-FE5A29911527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B051D2D-1C1E-4B6E-9513-5D0698F560EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B051D2D-1C1E-4B6E-9513-5D0698F560EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B051D2D-1C1E-4B6E-9513-5D0698F560EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B051D2D-1C1E-4B6E-9513-5D0698F560EE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
