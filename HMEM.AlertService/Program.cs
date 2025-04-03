@@ -1,6 +1,8 @@
-﻿using HMEM.Common.Configuration;
+﻿using HMEM.AlertService.ConsumersJobs;
+using HMEM.AlertService.Services;
+using HMEM.Common.Configuration;
 using HMEM.Data;
-using HMEM.Notification;
+using HMEM.MessageBroker;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,7 +22,7 @@ var host = Host.CreateDefaultBuilder(args)
             throw new ArgumentNullException(nameof(telegramConfig), "TelegramConfig is not found in configuration.");
         }
 
-        services.AddSingleton(telegramConfig); // TelegramConfig не може бути null
+        services.AddSingleton(telegramConfig);
 
         var mongoConfig = context.Configuration.GetSection("MongoDB").Get<MongoDBSettings>();
 
@@ -42,8 +44,10 @@ var host = Host.CreateDefaultBuilder(args)
         });
 
         services.AddScoped<CryptoPriceRepository>();
+        services.AddScoped<ProcessorService>();
 
-        services.AddHostedService<AlertService>();
+        services.AddKafkaConsumer(context.Configuration);
+        services.AddHostedService<PriceFetchedConsumerJob>();
     })
     .Build();
 

@@ -1,12 +1,11 @@
-using HMEM.API;
+using HMEM.API.Services;
 using HMEM.Data;
+using HMEM.MessageBroker;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 builder.Services.AddOpenApi();
 
 builder.Services.AddHttpClient();
@@ -23,9 +22,10 @@ builder.Services.AddScoped<CryptoPriceRepository>();
 
 builder.Services.AddHostedService<PriceFetcherService>();
 
+builder.Services.AddKafkaProducer(builder.Configuration);
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

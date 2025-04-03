@@ -1,18 +1,21 @@
-﻿using HMEM.Common.Models;
-using HMEM.Data;
+﻿using HMEM.MessageBroker;
+using HMEM.MessageBroker.Models;
 using System.Text.Json;
 
-namespace HMEM.API
+namespace HMEM.API.Services
 {
     public class PriceFetcherService : BackgroundService
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<PriceFetcherService> _logger;
+        private readonly IKafkaProducer _kafkaProducer;
 
-        public PriceFetcherService(IServiceProvider serviceProvider, IHttpClientFactory httpClientFactory, ILogger<PriceFetcherService> logger)
+        public PriceFetcherService(
+            IKafkaProducer kafkaProducer,
+            IHttpClientFactory httpClientFactory,
+            ILogger<PriceFetcherService> logger)
         {
-            _serviceProvider = serviceProvider;
+            _kafkaProducer = kafkaProducer;
             _httpClientFactory = httpClientFactory;
             _logger = logger;
         }
@@ -28,20 +31,18 @@ namespace HMEM.API
                     _logger.LogInformation("Fetching Ethereum price at: {time}", DateTime.UtcNow);
 
                     var price = await FetchPriceAsync();
+
                     if (price != null)
                     {
-                        // Отримуємо scoped сервіс із провайдера
-                        using var scope = _serviceProvider.CreateScope();
-                        var repository = scope.ServiceProvider.GetRequiredService<CryptoPriceRepository>();
-
-                        var entry = new PriceEntry
+                        PriceFetchedMessage message = new PriceFetchedMessage
                         {
                             Price = price.Value,
                             Timestamp = DateTime.UtcNow
                         };
-                        await repository.SavePriceAsync(entry);
 
-                        _logger.LogInformation("Successfully fetched and saved price: {price} USD at {time}", price, entry.Timestamp);
+                        await _kafkaProducer.ProduceAsync("alerts", message);
+
+                        _logger.LogInformation("Successfully fetched and saved price: {price} USD at {time}", price, message.Timestamp);
                     }
                     else
                     {

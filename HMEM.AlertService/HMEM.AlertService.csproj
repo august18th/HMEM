@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HMEM.Common\HMEM.Common.csproj" />
     <ProjectReference Include="..\HMEM.Data\HMEM.Data.csproj" />
+    <ProjectReference Include="..\HMEM.MessageBroker\HMEM.MessageBroker.csproj" />
   </ItemGroup>
 
 </Project>

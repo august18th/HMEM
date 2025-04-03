@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMEM.API", "HMEM.API\HMEM.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMEM.Common", "HMEM.Common\HMEM.Common.csproj", "{6B051D2D-1C1E-4B6E-9513-5D0698F560EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMEM.MessageBroker", "HMEM.MessageBroker\HMEM.MessageBroker.csproj", "{421E01EE-51F6-4CFC-B37E-BAE9A5BE96B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{6B051D2D-1C1E-4B6E-9513-5D0698F560EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B051D2D-1C1E-4B6E-9513-5D0698F560EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B051D2D-1C1E-4B6E-9513-5D0698F560EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{421E01EE-51F6-4CFC-B37E-BAE9A5BE96B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{421E01EE-51F6-4CFC-B37E-BAE9A5BE96B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{421E01EE-51F6-4CFC-B37E-BAE9A5BE96B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{421E01EE-51F6-4CFC-B37E-BAE9A5BE96B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
