@@ -17,13 +17,10 @@ obj/
 *.tmp
 *.DS_Store
 
-Dockerfile*
-docker-compose*
 /out/
 
 *.local.json
 
-appsettings.json
 appsettings.Development.json
 
 *.ncrunch*
@@ -44,3 +41,4 @@ yarn-error.log*
 
 .idea/
 *.iml
+.env
