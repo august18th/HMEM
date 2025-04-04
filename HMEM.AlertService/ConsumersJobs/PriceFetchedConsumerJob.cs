@@ -24,7 +24,7 @@ namespace HMEM.AlertService.ConsumersJobs
             {
                 try
                 {
-                    await _alertService.Check(message, stoppingToken);
+                    await _alertService.ProcessNewPrice(message, stoppingToken);
                 }
                 catch (Exception ex)
                 {

@@ -1,4 +1,5 @@
-﻿using HMEM.MessageBroker;
+﻿using HMEM.Common.Models.StockModels;
+using HMEM.MessageBroker;
 using HMEM.MessageBroker.Models;
 using System.Text.Json;
 
@@ -9,6 +10,12 @@ namespace HMEM.API.Services
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<PriceFetcherService> _logger;
         private readonly IKafkaProducer _kafkaProducer;
+
+        private readonly List<string> currencies = new List<string>()
+        {
+            "BTCUSDT",
+            "ETHUSDT"
+        };
 
         public PriceFetcherService(
             IKafkaProducer kafkaProducer,
@@ -28,25 +35,20 @@ namespace HMEM.API.Services
             {
                 try
                 {
-                    _logger.LogInformation("Fetching Ethereum price at: {time}", DateTime.UtcNow);
+                    List<BinancePrice> binancePrices = await FetchPriceAsync();
 
-                    var price = await FetchPriceAsync();
-
-                    if (price != null)
+                    foreach (var priceModel in binancePrices)
                     {
+                        _logger.LogInformation($"Message with {priceModel.Symbol} sent");
+
                         PriceFetchedMessage message = new PriceFetchedMessage
                         {
-                            Price = price.Value,
-                            Timestamp = DateTime.UtcNow
+                            Price = decimal.Parse(priceModel.Price),
+                            Timestamp = DateTime.UtcNow,
+                            Symbol = priceModel.Symbol
                         };
 
                         await _kafkaProducer.ProduceAsync("alerts", message);
-
-                        _logger.LogInformation("Successfully fetched and saved price: {price} USD at {time}", price, message.Timestamp);
-                    }
-                    else
-                    {
-                        _logger.LogWarning("Failed to fetch price. The response was null.");
                     }
                 }
                 catch (Exception ex)
@@ -60,26 +62,29 @@ namespace HMEM.API.Services
             _logger.LogInformation("PriceFetcherService is stopping at: {time}", DateTime.UtcNow);
         }
 
-        private async Task<decimal?> FetchPriceAsync()
+        private async Task<List<BinancePrice>> FetchPriceAsync()
         {
             try
             {
                 var client = _httpClientFactory.CreateClient();
-                var response = await client.GetAsync("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd");
+                var response = await client.GetAsync("https://api.binance.com/api/v3/ticker/price");
 
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var data = JsonSerializer.Deserialize<JsonElement>(json);
+                    var data = JsonSerializer.Deserialize<List<BinancePrice>>(json);
 
-                    if (data.TryGetProperty("ethereum", out var ethData) &&
-                        ethData.TryGetProperty("usd", out var price))
+                    if (data != null)
                     {
-                        return price.GetDecimal();
+                        var filtered = data
+                            .Where(p => currencies.Contains(p.Symbol))
+                            .ToList();
+
+                        return filtered;
                     }
                     else
                     {
-                        _logger.LogWarning("Unexpected response format from API.");
+                        _logger.LogWarning("data is null");
                     }
                 }
                 else
@@ -92,7 +97,7 @@ namespace HMEM.API.Services
                 _logger.LogError(ex, "Exception occurred during API call.");
             }
 
-            return null;
+            return new List<BinancePrice>();
         }
     }
 

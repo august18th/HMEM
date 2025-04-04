@@ -22,10 +22,10 @@ namespace HMEM.Data
             return await _priceCollection.Find(_ => true).ToListAsync();
         }
 
-        public async Task<PriceEntry?> GetLatestPriceAsync()
+        public async Task<PriceEntry?> GetLatestPriceAsync(string symbol)
         {
             return await _priceCollection
-                .Find(_ => true)
+                .Find(_ => _.Symbol == symbol)
                 .SortByDescending(p => p.Timestamp)
                 .FirstOrDefaultAsync();
         }
